@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>JOMO LITE 40 অর্ডার করুন</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #D61C4E;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #D61C4E;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #a81535;
+    }
+
+    .success {
+      text-align: center;
+      color: green;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .product-img {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>JOMO LITE 40</h1>
+    <img src="1 copy.jpg" alt="JOMO LITE 40 Structure" class="product-img">
+    <p>
+      💨 মূল্য: ১৬০০ টাকা<br>
+      🚚 ডেলিভারি চার্জ: ৬০ টাকা (সারা বাংলাদেশে)<br>
+      💰 ক্যাশ অন ডেলিভারি
+    </p>
+
+    <form id="orderForm">
+      <label for="district">জেলা</label>
+      <input type="text" id="district" required>
+
+      <label for="thana">থানা</label>
+      <input type="text" id="thana" required>
+
+      <label for="name">নাম</label>
+      <input type="text" id="name" required>
+
+      <label for="phone">মোবাইল নম্বর</label>
+      <input type="tel" id="phone" required>
+
+      <label for="address">পূর্ণ ঠিকানা</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <button type="submit">✅ অর্ডার করুন</button>
+    </form>
+
+    <div class="success" id="successMessage">
+      ✅ আপনার অর্ডার সফলভাবে গ্রহণ করা হয়েছে!
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("orderForm");
+    const successMessage = document.getElementById("successMessage");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        district: form.district.value,
+        thana: form.thana.value,
+        name: form.name.value,
+        phone: form.phone.value,
+        address: form.address.value
+      };
+
+      const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL';
+
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(res => res.text())
+      .then(response => {
+        console.log('Server Response:', response);
+        form.reset();
+        successMessage.style.display = "block";
+      })
+      .catch(err => {
+        alert("অর্ডার পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+        console.error(err);
+      });
+    });
+  </script>
+
+</body>
+</html>
